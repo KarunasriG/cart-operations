@@ -27,8 +27,8 @@ app.get('/cart/add', (req, res) => {
   let name = req.query.name;
   let price = parseFloat(req.query.price);
   let quantity = parseFloat(req.query.quantity);
-  let result = addItemToCart(cart, productId, name, price, quantity);
-  res.json(result);
+  let cartItems = addItemToCart(cart, productId, name, price, quantity);
+  res.json({cartItems});
 });
 
 // edit quantity of an item in the cart
@@ -43,8 +43,8 @@ function editItemInCart(cart, productId, quantity) {
 app.get('/cart/edit', (req, res) => {
   let productId = parseFloat(req.query.productId);
   let quantity = parseFloat(req.query.quantity);
-  let result = editItemInCart(cart, productId, quantity);
-  res.json(result);
+  let cartItems = editItemInCart(cart, productId, quantity);
+  res.json({cartItems});
 });
 
 // delete an item from the cart
@@ -55,12 +55,12 @@ app.get('/cart/delete', (req, res) => {
   let productId = parseFloat(req.query.productId);
   let result = deleteItemInCart(cart, productId);
   cart = result;
-  res.json(result);
+  res.json({cartItems});
 });
 
 // read items in the cart
 app.get('/cart', (req, res) => {
-  res.json(cart);
+  res.json({cartItems:cart});
 });
 
 // calculate total quantity of items in the cart
